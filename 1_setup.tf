@@ -13,6 +13,14 @@ terraform {
   }
     required_version = ">= 0.14"
   }
+
+  ### not allowing variable names
+terraform {
+  backend "gcs" {
+    bucket = "tf_state_eis"
+    prefix = "terraform/ca-sbox/ca-sbox-dataprep-444/gke/state"
+  }
+}
     
   provider "google" {
     project = var.project_id

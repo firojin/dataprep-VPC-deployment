@@ -1,9 +1,34 @@
-variable "project_id" {
+ variable "terraform-state-project-name" {
+  description = "terraform state Project Name"
+  default     = "infrastructure-services-247613"
+}
+
+variable "organizations-name" {
+  description = "Payments  App organizations Name"
+  default     = "ihg.com"
+}
+
+variable "organizations-id" {
+  description = "Paymetns App organizations ID"
+  default     = "807596908187"
+}
+
+variable "terraform-state-bucket-name" {
+  description = "Terraform state Google Bucket Name"
+  default     = "tf_state_eis"
+}
+
+variable "project-name" {
     description = "project id"
     default = "ca-sbox-dataprep-444"
   }
 
-  variable "region" {
+variable "bucket-name" {
+  description = "dataprep sbox Google Bucket Name"
+  default     = "ca-sbox-dataprep-444"
+}
+
+ variable "region" {
     description = "Region"
     default = "us-east4"
   }

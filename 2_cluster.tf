@@ -10,7 +10,7 @@ provider "kubernetes" {
 # Build gke cluster via private-cluster gke module provided by Google
 module "gke" {
   source                      = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster-update-variant"
-  project_id                  = var.project_id
+  project_id                  = var.project-name
   name                        = var.cluster
   regional                    = false
   region                      = var.region
