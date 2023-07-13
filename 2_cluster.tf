@@ -16,7 +16,7 @@ module "gke" {
   region                      = var.region
   zones                       = var.zones
   network                     = var.network
-  subnetwork                  = google_compute_subnetwork.dataprep-subnet.name
+  subnetwork                  = google_compute_subnetwork.subnetwork
   create_service_account      = false
   service_account             = google_service_account.dataprep-gke-sa.email
   enable_binary_authorization = true
@@ -32,9 +32,9 @@ module "gke" {
   horizontal_pod_autoscaling = true
   http_load_balancing        = true
   gce_pd_csi_driver          = true
-  ip_range_services          = "services-range"
-  ip_range_pods              = "pod-range"
-  master_ipv4_cidr_block     = "10.1.0.0/28"
+  ip_range_services          = "prod-subnet-dataprep-services-1"
+  ip_range_pods              = "prod-subnet-dataprep-pods-1"
+  master_ipv4_cidr_block     = "172.16.1.160/28"
   depends_on = [ google_service_account.dataprep-gke-sa ]
   node_pools = [
     {
@@ -50,7 +50,7 @@ module "gke" {
       auto_upgrade      = false
       preemptible       = false
       image_type        = "COS_CONTAINERD"
-      machine_type      = "n1-standard-16"
+      machine_type      = var.photon-instance-type
       version           = "1.27.2-gke.2100"
       enable_integrity_monitoring = true
       enable_secure_boot          = true
@@ -68,7 +68,7 @@ module "gke" {
       auto_upgrade      = false
       preemptible       = false
       image_type        = "COS_CONTAINERD"
-      machine_type      = "n1-standard-16"
+      machine_type      = var.data-instance-type
       version           = "1.22.7-gke.1300"
       enable_integrity_monitoring = true
       enable_secure_boot          = true
@@ -86,7 +86,7 @@ module "gke" {
       auto_upgrade      = false
       preemptible       = false
       image_type        = "COS_CONTAINERD"
-      machine_type      = "n1-standard-16"
+      machine_type      = var.convert-instance-type
       version           = "1.22.7-gke.1300"
       enable_integrity_monitoring = true
       enable_secure_boot          = true
@@ -114,7 +114,7 @@ module "gke" {
 
   master_authorized_networks = [
     {
-      cidr_block   = "34.68.114.64/28"
+      cidr_block   = "34.68.114.64/28,10.217.0.200/32"
       display_name = "dataprepService"
     },
     {

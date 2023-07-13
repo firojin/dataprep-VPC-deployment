@@ -21,9 +21,9 @@ terraform {
 
 # Get data about network to use.
 # *This could be changed to create a dedicated network if desired
-data "google_compute_network" "trifacta-in-vpc-net" {
+/*data "google_compute_network" "trifacta-in-vpc-net" {
   name = var.network
-}
+}*/
 
 # make sure the following apis are enabled on project
 resource "google_project_service" "compute" {
@@ -74,7 +74,7 @@ resource "google_project_iam_member" "artifactregistry" {
 }
 
 # Create subnet with allocated ranges
-resource "google_compute_subnetwork" "dataprep-subnet" {
+/*resource "google_compute_subnetwork" "dataprep-subnet" {
   name          = var.subnetwork
   ip_cidr_range = "10.1.0.0/16"
   region        = var.region
@@ -87,18 +87,18 @@ resource "google_compute_subnetwork" "dataprep-subnet" {
       range_name    = "services-range"
       ip_cidr_range = "192.168.128.0/22"
   } 
-}
+}*/
 
 
 # Create the router
-resource "google_compute_router" "cloud_router" {
+/*resource "google_compute_router" "cloud_router" {
   name = "${var.project_id}-${var.network}-router"
   network = data.google_compute_network.trifacta-in-vpc-net.id
   region = var.region
-}
+}*/
 
 # Create the NAT gateway
-resource "google_compute_router_nat" "cloud_nat" {
+/*resource "google_compute_router_nat" "cloud_nat" {
   name = "${var.project_id}-${var.subnetwork}-nat"
   router = google_compute_router.cloud_router.name
   region = var.region
@@ -107,7 +107,7 @@ resource "google_compute_router_nat" "cloud_nat" {
   subnetwork {
       name                    = google_compute_subnetwork.dataprep-subnet.id
       source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
-  }
+  }*/
   
   log_config {
   enable = true
